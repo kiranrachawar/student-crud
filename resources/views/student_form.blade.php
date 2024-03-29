@@ -1,0 +1,313 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Student Form</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"  crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"  crossorigin="anonymous"></script>
+
+<!-- FOR MULTISELECT DROPDOWN NECESSORY CDN LINK -->
+    <link rel="stylesheet" href="http://davidstutz.github.io/bootstrap-multiselect/dist/css/bootstrap-multiselect.css">
+<!-- FOR MULTISELECT DROPDOWN NECESSORY CDN LINK -->
+   
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+
+</head>
+
+<style>
+    .center {
+  margin: auto;
+  margin-top: 50px;
+  width: 39%;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: white;
+  
+}
+</style>
+    <body style="background: linear-gradient(to right, #fc2c77 0%, #6c4079 100%);">
+        <!-- <div class="container" style="background-color: green;"> -->
+            <div class="row center mb-5" >
+                <div class="col-md-12 ">
+                    <!-- @if($errors->any())
+                        @foreach($errors->all() as $msg)
+                        toastr.error("{{ $msg }}");
+                        @endforeach
+                    @endif -->
+                    <form action="store" id="frm" method="POST" class="ml-5 mt-2" enctype="multipart/form-data" autocomplete="off">
+                        @csrf
+                        <div class="col-md-11">
+                            <h1 class="text-center"><b>Student Form</b></h1>
+                        </div>
+                        <div class="col-md-11">
+                            <div class="form-group">
+                                <label for=""><b>Name</b></label>
+                                <input type="text" name="name" class="form-control " placeholder="Name" value="{{old('name')}}">
+                            </div>
+                        </div>
+                        <div class="col-md-11">
+                            <div class="form-group">
+                                <label for=""><b>Email</b></label>
+                                <input type="text" name="email" class="form-control" placeholder="Email" value="{{old('email')}}">
+                            </div>
+                        </div>
+            
+                        <div class="col-md-11">
+                            <div class="">
+                                <label for=""><b>Gender</b></label> 
+                            </div>
+                            <div class="form-group">
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" name="gender" class="form-check-input" value="Male" @if(old('gender') == 'Male') checked @endif>
+                                    <label for="" class="form-check-label"><b>Male</b></label>   
+                                </div>
+                                <div class="form-check form-check-inline"> 
+                                    <input type="radio" name="gender" class="form-check-input" value="Female" @if(old('gender') == 'Female') checked @endif>
+                                    <label for="" class="form-check-label"><b>Female</b></label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" name="gender" class="form-check-input" value="Other" @if(old('gender') == 'Other') checked @endif>
+                                    <label class="form-check-label"><b>Other</b></label>
+                                </div>
+                             </div>
+                        </div>
+                        <div class="col-md-11">
+                            <div class="form-group">
+                                <label for=""><b>Age</b></label>
+                                <input type="text" name="age" class="form-control" placeholder="Age" value="{{old('age')}}" >
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-11">
+                            <div class="form-group">
+                                <div>
+                                    <label for=""><b>Qualification</b></label>
+                                </div>
+                                
+                                <select id="qualification" class="form-control" name="qualification[]" multiple="multiple" >
+                                    <!-- <option value="">Please Select Qualification</option> -->
+                                    <option value="B.E." {{ is_array(old('qualification')) && in_array('B.E.', old('qualification')) ? ' selected ' : '' }} >B.E.</option>
+                                    <option value="M.C.A." {{ is_array(old('qualification')) && in_array('M.C.A.', old('qualification')) ? ' selected ' : '' }} >M.C.A.</option>
+                                    <option value="M.B.A." {{ is_array(old('qualification')) && in_array('M.B.A.', old('qualification')) ? ' selected ' : '' }} >M.B.A.</option>
+                                    <option value="Diploma" {{ is_array(old('qualification')) && in_array('Diploma', old('qualification')) ? ' selected ' : '' }} >Diploma</option>
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-11">
+                            <div class="form-group">
+                                <div>
+                                    <label for=""><b>Skills</b></label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" name="skills[]" class="form-check-input" value="PHP" {{ (is_array(old('skills')) && in_array('PHP', old('skills'))) ? ' checked' : '' }} >
+                                    <label for="" class="form-check-label">PHP</label   >
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" name="skills[]" class="form-check-input" value="JAVA"  {{ (is_array(old('skills')) && in_array('JAVA', old('skills'))) ? ' checked' : '' }} >
+                                    <label for="" class="form-check-label">JAVA</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" name="skills[]" class="form-check-input" value="PYTHON" {{ (is_array(old('skills')) && in_array('PYTHON', old('skills'))) ? ' checked' : '' }} >
+                                    <label for="" class="form-check-label">PYTHON</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" name="skills[]" class="form-check-input" value="C#" {{ (is_array(old('skills')) && in_array('C#', old('skills'))) ? ' checked' : '' }} >
+                                    <label for="" class="form-check-label">C#</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" name="skills[]" class="form-check-input" value="Any Other" {{ (is_array(old('skills')) && in_array('Any Other', old('skills'))) ? ' checked' : '' }} >
+                                    <label for="" class="form-check-label">Any Other</label>
+                                </div>    
+                            </div>
+                        </div>
+
+                        <div class="col-md-11">
+                            <div class="form-group">
+                                <label for=""><b>Contact</b></label>
+                                <input type="text" name="contact" class="form-control" placeholder="Contact" value="{{old('contact')}}">
+                            </div>
+                        </div>
+
+                        <div class="col-md-11">
+                            <div class="form-group">
+                                <label for=""><b>Image</b></label>
+                                <input type="file" name="image" class="form-control" placeholder="image" value="upload">
+                            </div>
+                        </div>
+
+                        <div class="col-md-5" style="margin-top:30px;margin-left: -4px;">
+                        <center>
+                            <input type="submit" id="submit" class="btn btn-lg" style="border-radius: 25px;width: 120px;font-weight: bold;
+                            background-color: #2dab0e;border-color: #2dab0e;color: #FFF;font-size: 17px;" value="SUBMIT">
+                            
+                        </center>
+                        </div>
+                    </form>
+                    <div class="col-md-11">
+                        <center>
+                            <a href="/" class="btn btn-danger btn-lg" style="border-radius: 25px;width: 120px;font-weight: bold;
+                            margin-left: 58px;margin-top: -76px;font-size: 17px;">CANCEL</a>
+                            <a class="btn btn-info btn-lg" onclick="reset()" style="border-radius: 25px;width: 120px;font-weight: bold;
+                            margin-left: 318px;margin-top: -124px;font-size: 17px;">RESET</a>
+
+                        </center>
+                        </div>
+
+                </div>
+            </div>
+        <!-- </div> -->
+    </body>
+</html>
+
+
+
+@if($errors->get('name'))
+    @foreach($errors->get('name') as $msg)
+        <script>
+            toastr.error("{{$msg}}");
+        </script>
+    @endforeach
+
+@elseif($errors->get('email'))
+    @foreach($errors->get('email') as $email)
+        <script>    
+            toastr.error("{{$email}}");
+        </script>
+    @endforeach
+
+@elseif($errors->get('gender'))
+    @foreach($errors->get('gender') as $gender)
+        <script>
+            toastr.error("{{$gender}}");
+        </script>
+    @endforeach
+
+@elseif($errors->get('age'))
+    @foreach($errors->get('age') as $age)
+        <script>
+            toastr.error("{{$age}}");
+        </script>
+    @endforeach
+
+@elseif($errors->get('qualification'))
+    @foreach($errors->get('qualification') as $qualification)
+        <script>
+            toastr.error("{{$qualification}}");
+        </script>
+    @endforeach
+
+@elseif($errors->get('skills'))
+    @foreach($errors->get('skills') as $skills)
+        <script>
+            toastr.error("{{$skills}}");
+        </script>
+    @endforeach
+
+@elseif($errors->get('contact'))
+    @foreach($errors->get('contact') as $contact)
+        <script>
+            toastr.error("{{$contact}}");
+        </script>
+    @endforeach
+
+@elseif($errors->get('image'))
+    @foreach($errors->get('image') as $image)
+        <script>
+            toastr.error("{{$image}}");
+        </script>
+    @endforeach
+
+   
+
+
+
+
+@endif
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<!-- FOR MULTISELECT DROPDOWN NECESSORY CDN LINK -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- Bootstrap multiselect -->
+    <script src="http://davidstutz.github.io/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+
+<!-- FOR MULTISELECT DROPDOWN NECESSORY CDN LINK -->
+
+<script>
+
+// FOR MULTISELECT DROPDOWN NECESSORY CODE START
+     $(document).ready(function() 
+     {
+        $('#qualification').multiselect({
+            includeSelectAllOption: true,  
+            buttonClass:'form-control',
+            nonSelectedText: 'Please Select Qualification',
+            buttonWidth: '421px',
+            enableFiltering:true,
+        });
+        $('.multiselect-search ').css({"margin-left": "-7px","width":"421px"});
+        $('.multiselect-container').css("width","421px");
+
+    //     var a = 1;
+    //   if (a == 1)
+    //   {
+    //     toastr.error('ok');
+    //   }
+      
+    });
+
+
+    // $('#submit').click(function () {
+    //     var a = $('#qualification').val();
+    //   if (a == 'B.E.')
+    //   {
+    //     console.log(a);
+    //     alert('okk')
+    //     toastr.error('ok');
+    //   }
+    //   });
+
+
+
+// FOR MULTISELECT DROPDOWN NECESSORY CODE END
+
+      function reset()
+      {
+        document.getElementById('frm').reset();
+      }
+
+    //   $(document).ready(function() {
+    //     $('.js-example-basic-single').multiselect();
+    // });
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
